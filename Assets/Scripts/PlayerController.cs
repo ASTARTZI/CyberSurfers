@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip crashSound;
     [SerializeField] private AudioClip duckSound;
 
+    [SerializeField] private ParticleSystem explosionParticle;
+
     private bool isOnGround = true;
     private bool isDucking = false;
     public bool gameOver = false;
@@ -131,8 +133,19 @@ public class PlayerController : MonoBehaviour
                 playerAnim.SetInteger("DeathType_int", 1);
             }
 
-            gameManager.GameOver();
+            if (explosionParticle != null)
+            {
+                explosionParticle.Play();
+            }
+
+            StartCoroutine(ShowGameOverAfterDelay());
         }
+    }
+
+    private System.Collections.IEnumerator ShowGameOverAfterDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        gameManager.GameOver();
     }
 
     private void OnTriggerEnter(Collider other)
