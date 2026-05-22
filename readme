@@ -3,3 +3,5 @@ git commit -m "update project"
 git push origin main
 
 git pull
+
+!Για αλλαγές που δεν θέλω να αποθηκευθούν μπορώ να κάνω git reset --hard   (ΠΡΟΣΟΧΗ! σβήνεται ό,τι προσθεσω μετά το τελευταίο pull)
