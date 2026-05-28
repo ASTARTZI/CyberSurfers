@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject obstaclePrefab;
+    [SerializeField] private GameObject[] groundObstaclePrefabs;
+    [SerializeField] private GameObject[] airObstaclePrefabs;
     [SerializeField] private GameObject rewardPrefab;
 
     [SerializeField] private int maxObstacles = 20;
@@ -44,21 +45,34 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        bool spawnAirObstacle;
-
-        if (randomObstacleOrder)
-        {
-            spawnAirObstacle = Random.value > 0.5f;
-        }
-        else
-        {
-            spawnAirObstacle = spawnedObstacles % 2 != 0;
-        }
+        bool spawnAirObstacle = randomObstacleOrder ? Random.value > 0.5f : spawnedObstacles % 2 != 0;
 
         Vector3 spawnPosition = spawnAirObstacle ? airSpawnPosition : groundSpawnPosition;
         Vector3 rewardOffset = spawnAirObstacle ? airRewardOffset : groundRewardOffset;
 
-        Instantiate(obstaclePrefab, spawnPosition, obstaclePrefab.transform.rotation);
+        GameObject selectedObstacle = null;
+
+        if (spawnAirObstacle)
+        {
+            if (airObstaclePrefabs != null && airObstaclePrefabs.Length > 0)
+            {
+                int randomIndex = Random.Range(0, airObstaclePrefabs.Length);
+                selectedObstacle = airObstaclePrefabs[randomIndex];
+            }
+        }
+        else
+        {
+            if (groundObstaclePrefabs != null && groundObstaclePrefabs.Length > 0)
+            {
+                int randomIndex = Random.Range(0, groundObstaclePrefabs.Length);
+                selectedObstacle = groundObstaclePrefabs[randomIndex];
+            }
+        }
+
+        if (selectedObstacle != null)
+        {
+            Instantiate(selectedObstacle, spawnPosition, selectedObstacle.transform.rotation);
+        }
 
         if (rewardPrefab != null)
         {

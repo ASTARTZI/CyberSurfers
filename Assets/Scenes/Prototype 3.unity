@@ -916,9 +916,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a6bbc2e188b74409fd3e2c33bbb468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
-  obstaclePrefab: {fileID: 3541481293784508373, guid: 25c640da4cbe12d4c91dafbfb99fc2e2, type: 3}
+  groundObstaclePrefabs:
+  - {fileID: 3541481293784508373, guid: 25c640da4cbe12d4c91dafbfb99fc2e2, type: 3}
+  - {fileID: 3277601059976225296, guid: 312fa88da397f7f49a1339e2cf72a167, type: 3}
+  - {fileID: 8162790433032704170, guid: d59778534383e634b8d4a300c2200686, type: 3}
+  airObstaclePrefabs:
+  - {fileID: 3541481293784508373, guid: 25c640da4cbe12d4c91dafbfb99fc2e2, type: 3}
+  - {fileID: 8162790433032704170, guid: d59778534383e634b8d4a300c2200686, type: 3}
   rewardPrefab: {fileID: 2989773118110770280, guid: d7e652695fa8c6c4199a010bf85f7b32, type: 3}
-  maxObstacles: 2
+  maxObstacles: 5
   startDelay: 2
   repeatRate: 3
   groundSpawnPosition: {x: 12, y: 0, z: 0}
@@ -1147,7 +1153,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -80}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &830617475
 MonoBehaviour:
@@ -1672,10 +1678,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   jumpForce: 10
   gravityModifier: 2
-  duckDuration: 1.4
+  duckDuration: 0.7
   jumpSound: {fileID: 8300000, guid: 0f7d0b7c3397f4dac91f20e8a77d2d57, type: 3}
   crashSound: {fileID: 8300000, guid: 913d6445ee8cc4152a9c18da590ee203, type: 3}
-  duckSound: {fileID: 0}
+  duckSound: {fileID: 8300000, guid: 08ab7053d586c458db3774d33c141a4b, type: 3}
   explosionParticle: {fileID: 22304752}
   gameOver: 0
 --- !u!4 &908050620 stripped
@@ -2038,7 +2044,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_fontColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2055,8 +2061,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2886,7 +2892,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_fontColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2903,8 +2909,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2993,7 +2999,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -250}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2132388924
 MonoBehaviour:
