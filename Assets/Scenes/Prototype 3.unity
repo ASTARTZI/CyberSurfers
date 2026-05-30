@@ -693,7 +693,7 @@ Transform:
   m_GameObject: {fileID: 534669902}
   serializedVersion: 2
   m_LocalRotation: {x: 0.073912784, y: 0.7032332, z: -0.073912784, w: 0.7032332}
-  m_LocalPosition: {x: -9, y: 5, z: 0}
+  m_LocalPosition: {x: -10, y: 6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -710,7 +710,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: d70999ba737574c808b1d37cbdca0c37, type: 3}
+  m_Resource: {fileID: 8300000, guid: bb2791b713d331142bb949f7a9327bf1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.4
   m_Pitch: 1
@@ -924,7 +924,7 @@ MonoBehaviour:
   - {fileID: 3541481293784508373, guid: 25c640da4cbe12d4c91dafbfb99fc2e2, type: 3}
   - {fileID: 8162790433032704170, guid: d59778534383e634b8d4a300c2200686, type: 3}
   rewardPrefab: {fileID: 2989773118110770280, guid: d7e652695fa8c6c4199a010bf85f7b32, type: 3}
-  maxObstacles: 5
+  maxObstacles: 20
   startDelay: 2
   repeatRate: 3
   groundSpawnPosition: {x: 12, y: 0, z: 0}

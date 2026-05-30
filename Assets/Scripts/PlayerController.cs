@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float jumpForce = 15f;
     [SerializeField] private float gravityModifier = 2f;
-    [SerializeField] private float duckDuration = 1.4f;
+    [SerializeField] private float duckDuration = 1.6f;
 
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip crashSound;
