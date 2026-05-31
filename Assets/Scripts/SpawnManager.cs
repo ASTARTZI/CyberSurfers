@@ -18,8 +18,12 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private bool randomObstacleOrder = true;
 
+    [SerializeField] private float[] lanePositions = { -4f, 0f, 4f };
+
+    [SerializeField] private float congratulationsDelay = 7f;
+
     private int spawnedObstacles = 0;
-    private int passedObstacles = 0;
+    private bool congratulationsStarted = false;
 
     private PlayerController playerController;
     private GameManager gameManager;
@@ -28,6 +32,7 @@ public class SpawnManager : MonoBehaviour
     {
         playerController = FindFirstObjectByType<PlayerController>();
         gameManager = FindFirstObjectByType<GameManager>();
+
         InvokeRepeating(nameof(SpawnObstacleAndReward), startDelay, repeatRate);
     }
 
@@ -42,13 +47,29 @@ public class SpawnManager : MonoBehaviour
         if (spawnedObstacles >= maxObstacles)
         {
             CancelInvoke(nameof(SpawnObstacleAndReward));
+
+            if (!congratulationsStarted)
+            {
+                congratulationsStarted = true;
+                StartCoroutine(ShowCongratulationsAfterDelay());
+            }
+
             return;
         }
 
-        bool spawnAirObstacle = randomObstacleOrder ? Random.value > 0.5f : spawnedObstacles % 2 != 0;
+        bool spawnAirObstacle =
+            randomObstacleOrder
+            ? Random.value > 0.5f
+            : spawnedObstacles % 2 != 0;
 
-        Vector3 spawnPosition = spawnAirObstacle ? airSpawnPosition : groundSpawnPosition;
-        Vector3 rewardOffset = spawnAirObstacle ? airRewardOffset : groundRewardOffset;
+        Vector3 spawnPosition =
+            spawnAirObstacle ? airSpawnPosition : groundSpawnPosition;
+
+        Vector3 rewardOffset =
+            spawnAirObstacle ? airRewardOffset : groundRewardOffset;
+
+        int randomLane = Random.Range(0, lanePositions.Length);
+        spawnPosition.z = lanePositions[randomLane];
 
         GameObject selectedObstacle = null;
 
@@ -71,24 +92,38 @@ public class SpawnManager : MonoBehaviour
 
         if (selectedObstacle != null)
         {
-            Instantiate(selectedObstacle, spawnPosition, selectedObstacle.transform.rotation);
+            Instantiate(
+                selectedObstacle,
+                spawnPosition,
+                selectedObstacle.transform.rotation
+            );
         }
 
         if (rewardPrefab != null)
         {
-            Instantiate(rewardPrefab, spawnPosition + rewardOffset, rewardPrefab.transform.rotation);
+            Instantiate(
+                rewardPrefab,
+                spawnPosition + rewardOffset,
+                rewardPrefab.transform.rotation
+            );
         }
 
         spawnedObstacles++;
+        Debug.Log("Spawned obstacle: " + spawnedObstacles);
+    }
+
+    private System.Collections.IEnumerator ShowCongratulationsAfterDelay()
+    {
+        yield return new WaitForSeconds(congratulationsDelay);
+
+        if (playerController != null && !playerController.gameOver && gameManager != null)
+        {
+            gameManager.Congratulations();
+        }
     }
 
     public void ObstaclePassed()
     {
-        passedObstacles++;
-
-        if (passedObstacles >= maxObstacles && gameManager != null)
-        {
-            gameManager.Congratulations();
-        }
+        
     }
 }

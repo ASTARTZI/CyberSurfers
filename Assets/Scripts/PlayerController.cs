@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravityModifier = 2f;
     [SerializeField] private float duckDuration = 1.6f;
 
+    [SerializeField] private float laneDistance = 4f;
+    [SerializeField] private float laneChangeSpeed = 10f;
+
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip crashSound;
     [SerializeField] private AudioClip duckSound;
@@ -21,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private bool isOnGround = true;
     private bool isDucking = false;
     public bool gameOver = false;
+
+    private int currentLane = 1; // 0 = left, 1 = center, 2 = right
 
     private Vector3 normalColliderCenter;
     private Vector3 normalColliderSize;
@@ -67,6 +72,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!gameOver)
+        {
+            HandleLaneMovement();
+        }
+
         if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && isOnGround && !gameOver && !isDucking)
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -87,6 +97,28 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Duck());
         }
+    }
+
+    private void HandleLaneMovement()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && currentLane > 0)
+        {
+            currentLane--;
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane < 2)
+        {
+            currentLane++;
+        }
+
+        Vector3 targetPosition = transform.position;
+        targetPosition.z = (1 - currentLane) * laneDistance;
+
+        transform.position = Vector3.Lerp(
+            transform.position,
+            targetPosition,
+            laneChangeSpeed * Time.deltaTime
+        );
     }
 
     private System.Collections.IEnumerator Duck()
