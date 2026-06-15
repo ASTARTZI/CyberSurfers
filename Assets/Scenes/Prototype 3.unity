@@ -1249,7 +1249,7 @@ MonoBehaviour:
   - {fileID: 3541481293784508373, guid: 25c640da4cbe12d4c91dafbfb99fc2e2, type: 3}
   - {fileID: 8162790433032704170, guid: d59778534383e634b8d4a300c2200686, type: 3}
   rewardPrefab: {fileID: 2989773118110770280, guid: d7e652695fa8c6c4199a010bf85f7b32, type: 3}
-  maxObstacles: 20
+  maxObstacles: 25
   startDelay: 2
   repeatRate: 3
   groundSpawnPosition: {x: 12, y: 0, z: 0}
