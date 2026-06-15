@@ -57,59 +57,63 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        bool spawnAirObstacle =
-            randomObstacleOrder
-            ? Random.value > 0.5f
-            : spawnedObstacles % 2 != 0;
+        int rewardLane = Random.Range(0, lanePositions.Length);
 
-        Vector3 spawnPosition =
-            spawnAirObstacle ? airSpawnPosition : groundSpawnPosition;
-
-        Vector3 rewardOffset =
-            spawnAirObstacle ? airRewardOffset : groundRewardOffset;
-
-        int randomLane = Random.Range(0, lanePositions.Length);
-        spawnPosition.z = lanePositions[randomLane];
-
-        GameObject selectedObstacle = null;
-
-        if (spawnAirObstacle)
+        for (int lane = 0; lane < lanePositions.Length; lane++)
         {
-            if (airObstaclePrefabs != null && airObstaclePrefabs.Length > 0)
+            bool spawnAirObstacle =
+                randomObstacleOrder
+                ? Random.value > 0.5f
+                : spawnedObstacles % 2 != 0;
+
+            Vector3 spawnPosition =
+                spawnAirObstacle ? airSpawnPosition : groundSpawnPosition;
+
+            Vector3 rewardOffset =
+                spawnAirObstacle ? airRewardOffset : groundRewardOffset;
+
+            spawnPosition.z = lanePositions[lane];
+
+            GameObject selectedObstacle = null;
+
+            if (spawnAirObstacle)
             {
-                int randomIndex = Random.Range(0, airObstaclePrefabs.Length);
-                selectedObstacle = airObstaclePrefabs[randomIndex];
+                if (airObstaclePrefabs != null && airObstaclePrefabs.Length > 0)
+                {
+                    int randomIndex = Random.Range(0, airObstaclePrefabs.Length);
+                    selectedObstacle = airObstaclePrefabs[randomIndex];
+                }
             }
-        }
-        else
-        {
-            if (groundObstaclePrefabs != null && groundObstaclePrefabs.Length > 0)
+            else
             {
-                int randomIndex = Random.Range(0, groundObstaclePrefabs.Length);
-                selectedObstacle = groundObstaclePrefabs[randomIndex];
+                if (groundObstaclePrefabs != null && groundObstaclePrefabs.Length > 0)
+                {
+                    int randomIndex = Random.Range(0, groundObstaclePrefabs.Length);
+                    selectedObstacle = groundObstaclePrefabs[randomIndex];
+                }
             }
-        }
 
-        if (selectedObstacle != null)
-        {
-            Instantiate(
-                selectedObstacle,
-                spawnPosition,
-                selectedObstacle.transform.rotation
-            );
-        }
+            if (selectedObstacle != null)
+            {
+                Instantiate(
+                    selectedObstacle,
+                    spawnPosition,
+                    selectedObstacle.transform.rotation
+                );
+            }
 
-        if (rewardPrefab != null)
-        {
-            Instantiate(
-                rewardPrefab,
-                spawnPosition + rewardOffset,
-                rewardPrefab.transform.rotation
-            );
+            if (lane == rewardLane && rewardPrefab != null)
+            {
+                Instantiate(
+                    rewardPrefab,
+                    spawnPosition + rewardOffset,
+                    rewardPrefab.transform.rotation
+                );
+            }
         }
 
         spawnedObstacles++;
-        Debug.Log("Spawned obstacle: " + spawnedObstacles);
+        Debug.Log("Spawned obstacle group: " + spawnedObstacles);
     }
 
     private System.Collections.IEnumerator ShowCongratulationsAfterDelay()
@@ -124,6 +128,6 @@ public class SpawnManager : MonoBehaviour
 
     public void ObstaclePassed()
     {
-        
+
     }
 }
